@@ -123,8 +123,17 @@
           <option value="es">ES</option>
           <option value="de">DE</option>
         </select>
+        <button id="btn-info" title="Guide" aria-label="User Guide" style="border-color:var(--link);color:var(--link);padding:6px 11px;">i</button>
       </div>
     </header>
+
+    <dialog id="help-dialog" style="background:var(--panel);color:var(--text);border:1px solid var(--link);border-radius:14px;max-width:560px;width:92%;padding:18px;">
+      <h3 id="help-title" style="margin-top:0;">User Guide</h3>
+      <pre id="help-body" style="white-space:pre-wrap;font-family:inherit;color:var(--muted);font-size:0.92rem;line-height:1.55;"></pre>
+      <div style="text-align:right;margin-top:14px;">
+        <button class="primary" id="btn-help-close">Close</button>
+      </div>
+    </dialog>
 
     <div class="toolbar">
       <input type="file" id="open-input" accept=".zip" hidden>
@@ -181,7 +190,10 @@
         safe: (n) => `SAFE (${n} verified)`,
         warn: (n) => `WARNING (${n} alerts)`,
         danger: (n) => `DANGER (${n} threats)`,
-        statusLocal: "100% local in your browser. Files never leave your device."
+        statusLocal: "100% local in your browser. Files never leave your device.",
+        helpTitle: "User Guide — Kasuality Archiver Web",
+        helpBody: "1. Open .zip: Inspect any .zip file locally on your phone, tablet, or PC.\n2. Create .zip: Select files to pack into a new .zip (auto-skips node_modules and .git).\n3. Extract Selected: Downloads the highlighted file from the archive.\n4. SHA-256: Computes the file integrity hash.\n5. Search: Filter by filename or search Full-Text inside compressed files.\n6. Quick Look: Tap any file to preview text, code, or images without extracting.",
+        closeBtn: "Close"
       },
       it: {
         noArchive: "Nessun archivio aperto",
@@ -194,7 +206,10 @@
         safe: (n) => `SICURO (${n} verificati)`,
         warn: (n) => `ATTENZIONE (${n} avvisi)`,
         danger: (n) => `PERICOLO (${n} minacce)`,
-        statusLocal: "100% locale nel tuo browser. I file non lasciano mai il dispositivo."
+        statusLocal: "100% locale nel tuo browser. I file non lasciano mai il dispositivo.",
+        helpTitle: "Legenda Funzioni — Kasuality Archiver Web",
+        helpBody: "1. Apri .zip: Apre qualsiasi .zip in locale su telefono, tablet o PC.\n2. Crea .zip: Seleziona uno o più file per creare un nuovo .zip (salta node_modules e .git).\n3. Estrai Selezionato: Scarica il singolo file selezionato dall'archivio.\n4. SHA-256: Calcola l'impronta di integrità dell'archivio.\n5. Cerca: Filtra per nome oppure cerca Full-Text dentro i file compressi.\n6. Quick Look: Tocca un file per vedere anteprima testo, codice o immagine senza estrarre.",
+        closeBtn: "Chiudi"
       },
       fr: {
         noArchive: "Aucune archive ouverte",
@@ -207,7 +222,10 @@
         safe: (n) => `SÛR (${n} vérifiés)`,
         warn: (n) => `ATTENTION (${n} alertes)`,
         danger: (n) => `DANGER (${n} menaces)`,
-        statusLocal: "100% local dans votre navigateur."
+        statusLocal: "100% local dans votre navigateur.",
+        helpTitle: "Guide — Kasuality Archiver Web",
+        helpBody: "1. Ouvrir .zip : Ouvre un fichier .zip localement.\n2. Créer .zip : Crée une nouvelle archive .zip.\n3. Extraire Sélection : Télécharge le fichier choisi.\n4. SHA-256 : Calcule l'empreinte d'intégrité.\n5. Rechercher : Filtre par nom ou texte intégral.\n6. Quick Look : Aperçu instantané sans extraction.",
+        closeBtn: "Fermer"
       },
       es: {
         noArchive: "Ningún archivo abierto",
@@ -220,7 +238,10 @@
         safe: (n) => `SEGURO (${n} verificados)`,
         warn: (n) => `ADVERTENCIA (${n} avisos)`,
         danger: (n) => `PELIGRO (${n} amenazas)`,
-        statusLocal: "100% local en tu navegador."
+        statusLocal: "100% local en tu navegador.",
+        helpTitle: "Guía — Kasuality Archiver Web",
+        helpBody: "1. Abrir .zip: Abre cualquier .zip localmente.\n2. Crear .zip: Crea un nuevo archivo .zip.\n3. Extraer Selección: Descarga el archivo elegido.\n4. SHA-256: Calcula el hash de integridad.\n5. Buscar: Filtra por nombre o texto completo.\n6. Quick Look: Vista previa sin extraer.",
+        closeBtn: "Cerrar"
       },
       de: {
         noArchive: "Kein Archiv geöffnet",
@@ -233,7 +254,10 @@
         safe: (n) => `SICHER (${n} geprüft)`,
         warn: (n) => `WARNUNG (${n} Hinweise)`,
         danger: (n) => `GEFAHR (${n} Bedrohungen)`,
-        statusLocal: "100% lokal in deinem Browser."
+        statusLocal: "100% lokal in deinem Browser.",
+        helpTitle: "Anleitung — Kasuality Archiver Web",
+        helpBody: "1. .zip öffnen: Öffnet eine .zip-Datei lokal.\n2. .zip erstellen: Erstellt ein neues .zip-Archiv.\n3. Auswahl entpacken: Lädt die gewählte Datei herunter.\n4. SHA-256: Berechnet den Integritäts-Hash.\n5. Suchen: Filtert nach Name oder Volltext.\n6. Quick Look: Sofortige Vorschau ohne Entpacken.",
+        closeBtn: "Schließen"
       }
     };
 
@@ -458,6 +482,9 @@
       document.getElementById("hdr-files").textContent = t.hdrFiles;
       document.getElementById("hdr-preview").textContent = t.hdrPreview;
       document.getElementById("status-text").textContent = t.statusLocal;
+      document.getElementById("help-title").textContent = t.helpTitle;
+      document.getElementById("help-body").textContent = t.helpBody;
+      document.getElementById("btn-help-close").textContent = t.closeBtn;
       if (!entries.length) {
         document.getElementById("sec-badge").textContent = t.noArchive;
         document.getElementById("preview-body").textContent = t.welcome;
@@ -465,6 +492,8 @@
     }
 
     document.getElementById("lang-select").onchange = (e) => applyLang(e.target.value);
+    document.getElementById("btn-info").onclick = () => document.getElementById("help-dialog").showModal();
+    document.getElementById("btn-help-close").onclick = () => document.getElementById("help-dialog").close();
     document.getElementById("btn-open").onclick = () => document.getElementById("open-input").click();
     document.getElementById("btn-create").onclick = () => document.getElementById("create-input").click();
 
