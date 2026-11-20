@@ -54,6 +54,21 @@ TRANSLATIONS = {
         "not_archive_prompt": "'{name}' is not a compressed archive.\nDo you want to compress it into a new archive now?",
         "extract_selected_prompt": "You selected {n} item(s).\n\nYes = Extract ONLY selected\nNo = Extract ALL files\nCancel = Abort",
         "ctx_extract_selected": "Extract selected only",
+        "help_title": "User Guide — Kasuality Archiver",
+        "help_body": (
+            "BUTTONS AND FEATURES GUIDE\n\n"
+            "1. Open Archive: Opens .zip, .7z, .tar.zst, .tar.gz, .tar, .tar.bz2, .tar.xz, or .zst files. "
+            "If you pick a normal file, it offers to compress it right away.\n\n"
+            "2. New Archive: Compresses a folder into .zip, .7z, .tar.zst, or .tar.gz. "
+            "Smart Dev Exclude automatically skips node_modules, .git, __pycache__, dist, and .venv.\n\n"
+            "3. Safe Extract: Extracts the entire archive, or ONLY selected items "
+            "(use Ctrl + click or right-click -> Extract selected only), blocking path traversal.\n\n"
+            "4. Security Report: Shows the Zero-Trust scan result (path traversal, double extensions like .pdf.exe, zip bombs).\n\n"
+            "5. Verify SHA-256: Computes the integrity hash of the archive and copies it to your clipboard.\n\n"
+            "6. Search (Filename / Full-Text): Filter by filename or search words INSIDE compressed text/code files without extracting.\n\n"
+            "7. Quick Look (Right Panel): Click any text, code, or image file to preview it in memory with zero temp files."
+        ),
+        "close_btn": "Close",
         "lang_label": "Lang:",
     },
     "it": {
@@ -103,6 +118,21 @@ TRANSLATIONS = {
         "not_archive_prompt": "'{name}' non è un archivio compresso.\nVuoi comprimerlo in un nuovo archivio adesso?",
         "extract_selected_prompt": "Hai selezionato {n} file.\n\nSì = Estrai SOLO i file selezionati\nNo = Estrai TUTTO l'archivio\nAnnulla = Esci",
         "ctx_extract_selected": "Estrai solo selezionati",
+        "help_title": "Legenda Funzioni — Kasuality Archiver",
+        "help_body": (
+            "GUIDA AI PULSANTI E ALLE FUNZIONI\n\n"
+            "1. Apri Archivio: Apre file .zip, .7z, .tar.zst, .tar.gz, .tar, .tar.bz2, .tar.xz o .zst. "
+            "Se scegli per errore un file normale, ti propone di comprimerlo subito.\n\n"
+            "2. Nuovo Archivio: Comprime una cartella in .zip, .7z, .tar.zst o .tar.gz. "
+            "Smart Dev Exclude salta in automatico node_modules, .git, __pycache__, dist e .venv.\n\n"
+            "3. Estrai in Sicurezza: Estrae tutto l'archivio, oppure SOLO i file selezionati "
+            "(usa Ctrl + clic oppure tasto destro -> Estrai solo selezionati), bloccando ogni path traversal.\n\n"
+            "4. Report Sicurezza: Mostra i risultati della scansione Zero-Trust (path traversal, doppie estensioni .pdf.exe, zip bomb).\n\n"
+            "5. Verifica SHA-256: Calcola il codice di integrità dell'archivio e lo copia negli appunti.\n\n"
+            "6. Cerca (Nome / Full-Text nei file): Filtra per nome oppure cerca parole DENTRO i file compressi senza estrarre.\n\n"
+            "7. Quick Look (Pannello a destra): Clicca su un testo, codice o immagine per vederli subito in memoria senza file temporanei."
+        ),
+        "close_btn": "Chiudi",
         "lang_label": "Lingua:",
     },
     "fr": {
@@ -152,6 +182,21 @@ TRANSLATIONS = {
         "not_archive_prompt": "'{name}' n'est pas une archive compressée.\nVoulez-vous le compresser dans une nouvelle archive maintenant ?",
         "extract_selected_prompt": "Vous avez sélectionné {n} élément(s).\n\nOui = Extraire UNIQUEMENT la sélection\nNon = Extraire TOUTE l'archive\nAnnuler = Quitter",
         "ctx_extract_selected": "Extraire uniquement la sélection",
+        "help_title": "Guide des Boutons — Kasuality Archiver",
+        "help_body": (
+            "GUIDE DES BOUTONS ET FONCTIONS\n\n"
+            "1. Ouvrir Archive : Ouvre .zip, .7z, .tar.zst, .tar.gz, .tar, .tar.bz2, .tar.xz ou .zst. "
+            "Si vous choisissez un fichier normal, il propose de le compresser.\n\n"
+            "2. Nouvelle Archive : Compresse un dossier en .zip, .7z, .tar.zst ou .tar.gz. "
+            "Smart Dev Exclude ignore automatiquement node_modules, .git, __pycache__, dist et .venv.\n\n"
+            "3. Extraction Sûre : Extrait toute l'archive ou UNIQUEMENT la sélection "
+            "(Ctrl + clic ou clic droit -> Extraire uniquement la sélection).\n\n"
+            "4. Rapport Sécurité : Affiche l'analyse Zero-Trust (path traversal, doubles extensions .pdf.exe).\n\n"
+            "5. Vérifier SHA-256 : Calcule l'empreinte SHA-256 et la copie dans le presse-papiers.\n\n"
+            "6. Rechercher (Nom / Texte intégral) : Filtre par nom ou cherche dans le contenu sans décompresser.\n\n"
+            "7. Quick Look (Panneau droit) : Aperçu instantané en mémoire pour texte, code et images."
+        ),
+        "close_btn": "Fermer",
         "lang_label": "Langue:",
     },
     "es": {
@@ -201,6 +246,21 @@ TRANSLATIONS = {
         "not_archive_prompt": "'{name}' no es un archivo comprimido.\n¿Quieres comprimirlo en un nuevo archivo ahora?",
         "extract_selected_prompt": "Has seleccionado {n} elemento(s).\n\nSí = Extraer SOLO seleccionados\nNo = Extraer TODO el archivo\nCancelar = Salir",
         "ctx_extract_selected": "Extraer solo seleccionados",
+        "help_title": "Guía de Botones — Kasuality Archiver",
+        "help_body": (
+            "GUÍA DE BOTONES Y FUNCIONES\n\n"
+            "1. Abrir Archivo: Abre .zip, .7z, .tar.zst, .tar.gz, .tar, .tar.bz2, .tar.xz o .zst. "
+            "Si eliges un archivo normal, te ofrece comprimirlo.\n\n"
+            "2. Nuevo Archivo: Comprime una carpeta en .zip, .7z, .tar.zst o .tar.gz. "
+            "Smart Dev Exclude omite automáticamente node_modules, .git, __pycache__, dist y .venv.\n\n"
+            "3. Extracción Segura: Extrae todo el archivo o SOLO los elementos seleccionados "
+            "(Ctrl + clic o clic derecho -> Extraer solo seleccionados).\n\n"
+            "4. Informe Seguridad: Muestra el escaneo Zero-Trust (path traversal, dobles extensiones .pdf.exe).\n\n"
+            "5. Verificar SHA-256: Calcula el hash SHA-256 y lo copia al portapapeles.\n\n"
+            "6. Buscar (Nombre / Texto completo): Filtra por nombre o busca dentro de archivos comprimidos sin extraer.\n\n"
+            "7. Quick Look (Panel derecho): Vista previa en memoria de texto, código e imágenes."
+        ),
+        "close_btn": "Cerrar",
         "lang_label": "Idioma:",
     },
     "de": {
@@ -250,6 +310,21 @@ TRANSLATIONS = {
         "not_archive_prompt": "'{name}' ist kein komprimiertes Archiv.\nMöchtest du es jetzt in ein neues Archiv komprimieren?",
         "extract_selected_prompt": "Du hast {n} Element(e) ausgewählt.\n\nJa = NUR ausgewählte entpacken\nNein = ALLES entpacken\nAbbrechen = Zurück",
         "ctx_extract_selected": "Nur ausgewählte entpacken",
+        "help_title": "Anleitung — Kasuality Archiver",
+        "help_body": (
+            "ANLEITUNG ZU ALLEN SCHALTFLÄCHEN\n\n"
+            "1. Archiv öffnen: Öffnet .zip, .7z, .tar.zst, .tar.gz, .tar, .tar.bz2, .tar.xz oder .zst. "
+            "Bei einer normalen Datei wird direkt das Komprimieren angeboten.\n\n"
+            "2. Neues Archiv: Komprimiert einen Ordner als .zip, .7z, .tar.zst oder .tar.gz. "
+            "Smart Dev Exclude überspringt node_modules, .git, __pycache__, dist und .venv.\n\n"
+            "3. Sicher entpacken: Entpackt alles oder NUR ausgewählte Dateien "
+            "(Strg + Klick oder Rechtsklick -> Nur ausgewählte entpacken).\n\n"
+            "4. Sicherheitsbericht: Zeigt den Zero-Trust-Scan (Path-Traversal, doppelte Endungen wie .pdf.exe).\n\n"
+            "5. SHA-256 prüfen: Berechnet den SHA-256-Hash und kopiert ihn in die Zwischenablage.\n\n"
+            "6. Suchen (Dateiname / Volltext): Filtert nach Namen oder sucht im Inhalt ohne Entpacken.\n\n"
+            "7. Quick Look (Rechts): Sofortige Vorschau für Text, Code und Bilder im Speicher."
+        ),
+        "close_btn": "Schließen",
         "lang_label": "Sprache:",
     },
 }

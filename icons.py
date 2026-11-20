@@ -101,3 +101,11 @@ def make_globe_icon(size: int = 16, color: str = "#93C5FD") -> ImageTk.PhotoImag
     d.ellipse([5 * s, 2 * s, 11 * s, 14 * s], outline=color, width=1 * s)
     d.line([2 * s, 8 * s, 14 * s, 8 * s], fill=color, width=1 * s)
     return _finish(img, size)
+
+
+def make_info_icon(size: int = 16, color: str = "#93C5FD") -> ImageTk.PhotoImage:
+    img, d, s = _new_canvas(size)
+    d.ellipse([2 * s, 2 * s, 14 * s, 14 * s], outline=color, width=2 * s)
+    d.ellipse([7 * s, 4 * s, 9 * s, 6 * s], fill=color)
+    d.line([8 * s, 7 * s, 8 * s, 12 * s], fill=color, width=2 * s)
+    return _finish(img, size)

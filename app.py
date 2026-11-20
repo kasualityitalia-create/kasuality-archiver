@@ -35,6 +35,7 @@ from icons import (
     make_folder_icon,
     make_globe_icon,
     make_hash_icon,
+    make_info_icon,
     make_plus_box_icon,
     make_search_icon,
     make_shield_icon,
@@ -92,6 +93,7 @@ class KasualityArchiverApp(tk.Tk):
             "hash": make_hash_icon(16),
             "search": make_search_icon(16),
             "globe": make_globe_icon(16),
+            "info": make_info_icon(16),
         }
         self.iconphoto(True, self._icons["brand"])
 
@@ -250,7 +252,23 @@ class KasualityArchiverApp(tk.Tk):
                 command=lambda c=code: self.set_language(c),
             )
         self.lang_btn.configure(menu=lang_menu)
-        self.lang_btn.pack(side="left")
+        self.lang_btn.pack(side="left", padx=(0, 8))
+
+        self.btn_info = tk.Button(
+            right_hdr,
+            image=self._icons["info"],
+            command=self.on_show_help,
+            bg=BG_CARD,
+            activebackground=BG_CARD_HOVER,
+            relief="flat",
+            bd=0,
+            highlightthickness=1,
+            highlightbackground=LINK_BLUE,
+            padx=8,
+            pady=4,
+            cursor="hand2",
+        )
+        self.btn_info.pack(side="left")
 
         # Toolbar Row 1 (Primary Actions with SVG-style icons)
         toolbar_row1 = tk.Frame(self, bg=BG_DARK, pady=6, padx=14)
@@ -697,6 +715,33 @@ class KasualityArchiverApp(tk.Tk):
             return
         details = "\n".join(f"[{f.level}] {f.entry}\n  -> {f.reason}" for f in rep.findings[:25])
         messagebox.showwarning(f"{self.t('btn_security')} — {rep.status}", details)
+
+    def on_show_help(self) -> None:
+        win = tk.Toplevel(self)
+        win.title(self.t("help_title"))
+        win.geometry("620x520")
+        win.configure(bg=BG_PANEL)
+        win.transient(self)
+        win.grab_set()
+
+        txt = tk.Text(
+            win,
+            bg=BG_PANEL,
+            fg=FG_TEXT,
+            relief="flat",
+            wrap="word",
+            font=("Segoe UI", 10),
+            padx=18,
+            pady=16,
+        )
+        txt.insert("1.0", self.t("help_body"))
+        txt.configure(state="disabled")
+        txt.pack(fill="both", expand=True)
+
+        bottom = tk.Frame(win, bg=BG_CARD, height=48)
+        bottom.pack(fill="x", side="bottom")
+        bottom.pack_propagate(False)
+        self._make_btn(bottom, self.t("close_btn"), win.destroy, primary=True).pack(side="right", padx=14, pady=8)
 
     def on_show_sha256(self) -> None:
         if not self.current_archive:
