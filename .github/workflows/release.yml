@@ -1,0 +1,86 @@
+name: Build and Release Kasuality Archiver
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+
+  build:
+    needs: test
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            artifact: Kasuality-Archiver-Windows.exe
+            mode: windows
+          - os: macos-latest
+            artifact: Kasuality-Archiver-macOS.zip
+            mode: macos
+          - os: ubuntu-latest
+            artifact: Kasuality-Archiver-Linux.tar.gz
+            mode: linux
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pyinstaller
+
+      - name: Build Windows binary
+        if: matrix.mode == 'windows'
+        run: |
+          pyinstaller --noconfirm --onefile --windowed --name "Kasuality-Archiver-Windows" --icon "kasuality_archiver.ico" app.py
+          copy dist\Kasuality-Archiver-Windows.exe Kasuality-Archiver-Windows.exe
+
+      - name: Build macOS bundle
+        if: matrix.mode == 'macos'
+        run: |
+          pyinstaller --noconfirm --windowed --name "Kasuality Archiver" app.py
+          cd dist && zip -r ../Kasuality-Archiver-macOS.zip "Kasuality Archiver.app"
+
+      - name: Build Linux binary
+        if: matrix.mode == 'linux'
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-tk
+          pyinstaller --noconfirm --onefile --name "kasuality-archiver" app.py
+          tar -czf Kasuality-Archiver-Linux.tar.gz -C dist kasuality-archiver
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*
+          generate_release_notes: true
