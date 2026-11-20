@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kasuality Archiver — Free Zero-Trust Archiver by Kasuality</title>
+  <meta name="description" content="Free, zero-ads desktop archiver with instant Quick Look preview, full-text search inside archives, Smart Dev Exclude, and Zero-Trust security scan.">
+  <meta property="og:image" content="social-preview.png">
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <style>
+    :root {
+      --bg: #0A0E17;
+      --panel: #111827;
+      --card: #1E293B;
+      --border: #475569;
+      --text: #F8FAFC;
+      --muted: #CBD5E1;
+      --link: #93C5FD;
+      --accent: #1D4ED8;
+      --accent-hover: #1E40AF;
+      --safe-bg: #064E3B;
+      --safe-fg: #A7F3D0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container { max-width: 980px; margin: 0 auto; padding: 24px 20px 64px; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+    .brand img { width: 42px; height: 42px; }
+    .brand strong { font-size: 1.25rem; display: block; }
+    .brand span { font-size: 0.9rem; color: var(--link); font-weight: 600; }
+    .lang-bar { display: flex; gap: 6px; }
+    .lang-btn {
+      background: var(--card); color: var(--text); border: 1px solid var(--border);
+      padding: 6px 10px; border-radius: 8px; cursor: pointer; font-weight: 600;
+    }
+    .lang-btn.active { background: var(--accent); border-color: var(--link); color: #FFFFFF; }
+    .hero { text-align: center; padding: 48px 0 32px; }
+    .pill {
+      display: inline-block; padding: 5px 14px; border-radius: 999px;
+      background: var(--safe-bg); color: var(--safe-fg); border: 1px solid #34D399;
+      font-size: 0.85rem; font-weight: 700; margin-bottom: 16px;
+    }
+    h1 { font-size: clamp(1.9rem, 4vw, 2.8rem); margin: 0 0 14px; line-height: 1.2; }
+    .subtitle { color: var(--muted); max-width: 680px; margin: 0 auto 28px; font-size: 1.05rem; }
+    .primary-cta {
+      display: inline-block; background: var(--accent); color: #FFFFFF;
+      padding: 14px 28px; border-radius: 12px; text-decoration: none;
+      font-weight: 700; font-size: 1.05rem; border: 1px solid var(--link);
+    }
+    .primary-cta:hover { background: var(--accent-hover); }
+    .detected-note { margin-top: 10px; color: var(--muted); font-size: 0.9rem; }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px; margin-top: 36px;
+    }
+    .card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+      padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .card.recommended { border-color: var(--link); background: var(--card); }
+    .card h2 { font-size: 1.1rem; margin: 0 0 8px; }
+    .card p { color: var(--muted); font-size: 0.92rem; margin: 0 0 16px; }
+    .card a {
+      display: block; text-align: center; padding: 10px 12px; border-radius: 8px;
+      background: var(--card); color: var(--text); border: 1px solid var(--border);
+      text-decoration: none; font-weight: 600;
+    }
+    .card.recommended a { background: var(--accent); border-color: var(--link); color: #FFFFFF; }
+    .features { margin-top: 44px; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+    .features h3 { margin-top: 0; }
+    .features ul { margin: 0; padding-left: 20px; color: var(--muted); }
+    .features li { margin-bottom: 8px; }
+    footer { margin-top: 48px; text-align: center; color: var(--muted); font-size: 0.9rem; }
+    footer a { color: var(--link); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a class="brand" href="https://kasuality.com" target="_blank" rel="noopener">
+        <img src="logo.svg" alt="Kasuality Archiver Logo">
+        <div>
+          <strong>Kasuality Archiver</strong>
+          <span>by Kasuality</span>
+        </div>
+      </a>
+      <div class="lang-bar" role="group" aria-label="Language selector">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="it">IT</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="de">DE</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="pill" id="pill">100% Free • Zero Ads • Zero Nag Screen</div>
+      <h1 id="title">Modern Zero-Trust Archiver for Everyday Work</h1>
+      <p class="subtitle" id="subtitle">Preview files inside archives without extracting, search full-text inside compressed code, block hidden .exe traps, and compress cleanly with Smart Dev Exclude.</p>
+      <a id="primary-btn" class="primary-cta" href="https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest">Download</a>
+      <div class="detected-note" id="detected-note"></div>
+    </section>
+
+    <section class="grid" aria-label="Choose your device">
+      <div class="card" id="card-win">
+        <div>
+          <h2>Windows</h2>
+          <p id="desc-win">Standalone .exe installer for Windows 10 and Windows 11.</p>
+        </div>
+        <a href="https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest/download/Kasuality-Archiver-Windows.exe" id="btn-win">Download .exe</a>
+      </div>
+      <div class="card" id="card-mac">
+        <div>
+          <h2>Apple macOS</h2>
+          <p id="desc-mac">Universal desktop bundle for Mac (Apple Silicon and Intel).</p>
+        </div>
+        <a href="https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest/download/Kasuality-Archiver-macOS.zip" id="btn-mac">Download .zip</a>
+      </div>
+      <div class="card" id="card-linux">
+        <div>
+          <h2>Linux</h2>
+          <p id="desc-linux">Standalone binary package for Ubuntu, Fedora, and Arch.</p>
+        </div>
+        <a href="https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest/download/Kasuality-Archiver-Linux.tar.gz" id="btn-linux">Download .tar.gz</a>
+      </div>
+      <div class="card" id="card-mobile">
+        <div>
+          <h2 id="title-mobile">Tablet / Mobile</h2>
+          <p id="desc-mobile">Zero-install Web App for iPadOS, Android, and iPhone (runs locally in browser).</p>
+        </div>
+        <a href="app.html" id="btn-mobile">Open Web App</a>
+      </div>
+    </section>
+
+    <section class="features">
+      <h3 id="feat-heading">Why Kasuality Archiver?</h3>
+      <ul id="feat-list"></ul>
+    </section>
+
+    <footer>
+      100% Free • Zero Ads • <a id="footer-brand-link" href="https://www.kasuality.com/en/" target="_blank" rel="noopener">by Kasuality (kasuality.com)</a>
+    </footer>
+  </div>
+
+  <script>
+    const I18N = {
+      en: {
+        pill: "100% Free • Zero Ads • Zero Nag Screen",
+        title: "Modern Zero-Trust Archiver for Everyday Work",
+        subtitle: "Preview files inside archives without extracting, search full-text inside compressed code, block hidden .exe traps, and compress cleanly with Smart Dev Exclude.",
+        detected: (os) => `Detected device: ${os}. Or pick your platform below:`,
+        dlFor: (os) => `Download for ${os}`,
+        featHeading: "Why Kasuality Archiver?",
+        features: [
+          "Instant Quick Look preview for text, code, and images without extracting to disk.",
+          "Zero-Trust security scan against path traversal and double extensions (.pdf.exe).",
+          "Full-text search inside compressed archives without unpacking.",
+          "Extract all files or only selected items, plus SHA-256 verification.",
+          "Supports .zip, .7z, .tar.zst (Zstandard), .tar.gz, .tar, .tar.bz2, .tar.xz."
+        ]
+      },
+      it: {
+        pill: "100% Gratuito • Zero Ads • Zero Popup",
+        title: "L'Archiver Moderno Zero-Trust per Lavorare Meglio",
+        subtitle: "Guarda dentro gli archivi senza estrarre nulla, cerca parole nei file compressi, blocca trappole .exe nascoste e comprimi pulito con Smart Dev Exclude.",
+        detected: (os) => `Dispositivo rilevato: ${os}. Oppure scegli manualmente qui sotto:`,
+        dlFor: (os) => `Scarica per ${os}`,
+        featHeading: "Perché Kasuality Archiver?",
+        features: [
+          "Quick Look istantaneo per testi, codice e immagini senza estrarre su disco.",
+          "Scansione sicurezza Zero-Trust contro path traversal e doppie estensioni (.pdf.exe).",
+          "Ricerca Full-Text dentro i file compressi senza scompattare.",
+          "Estrazione completa o solo dei file selezionati, più verifica SHA-256.",
+          "Supporta .zip, .7z, .tar.zst (Zstandard), .tar.gz, .tar, .tar.bz2, .tar.xz."
+        ]
+      },
+      fr: {
+        pill: "100% Gratuit • Sans Pub • Sans Fenêtre Invasive",
+        title: "Archiveur Moderne Zero-Trust pour le Quotidien",
+        subtitle: "Prévisualisez sans extraire, recherchez en plein texte, bloquez les pièges .exe cachés et compressez proprement avec Smart Dev Exclude.",
+        detected: (os) => `Appareil détecté : ${os}. Ou choisissez ci-dessous :`,
+        dlFor: (os) => `Télécharger pour ${os}`,
+        featHeading: "Pourquoi Kasuality Archiver ?",
+        features: [
+          "Aperçu Quick Look instantané sans extraction sur disque.",
+          "Analyse Zero-Trust contre le path traversal et les doubles extensions (.pdf.exe).",
+          "Recherche plein texte dans les archives compressées.",
+          "Extraction complète ou sélective avec vérification SHA-256.",
+          "Supporte .zip, .7z, .tar.zst (Zstandard), .tar.gz, .tar, .tar.bz2, .tar.xz."
+        ]
+      },
+      es: {
+        pill: "100% Gratis • Sin Anuncios • Sin Ventanas Molestas",
+        title: "Archivador Moderno Zero-Trust para tu Trabajo Diario",
+        subtitle: "Vista previa sin extraer, búsqueda de texto completo, bloqueo de trampas .exe ocultas y compresión limpia con Smart Dev Exclude.",
+        detected: (os) => `Dispositivo detectado: ${os}. O elige abajo manualmente:`,
+        dlFor: (os) => `Descargar para ${os}`,
+        featHeading: "¿Por qué Kasuality Archiver?",
+        features: [
+          "Vista previa Quick Look al instante sin extraer en disco.",
+          "Escaneo Zero-Trust contra path traversal y dobles extensiones (.pdf.exe).",
+          "Búsqueda de texto completo dentro de archivos comprimidos.",
+          "Extracción total o solo de archivos seleccionados, más verificación SHA-256.",
+          "Compatible con .zip, .7z, .tar.zst (Zstandard), .tar.gz, .tar, .tar.bz2, .tar.xz."
+        ]
+      },
+      de: {
+        pill: "100% Kostenlos • Keine Werbung • Keine Popups",
+        title: "Moderner Zero-Trust Archiver für den Alltag",
+        subtitle: "Sofortige Vorschau ohne Entpacken, Volltextsuche in Archiven, Schutz vor versteckten .exe-Fallen und Smart Dev Exclude.",
+        detected: (os) => `Erkanntes Gerät: ${os}. Oder unten manuell wählen:`,
+        dlFor: (os) => `Herunterladen für ${os}`,
+        featHeading: "Warum Kasuality Archiver?",
+        features: [
+          "Sofortige Quick Look Vorschau für Text, Code und Bilder ohne Entpacken.",
+          "Zero-Trust Sicherheitsscan gegen Path-Traversal und doppelte Endungen (.pdf.exe).",
+          "Volltextsuche in komprimierten Archiven ohne Auspacken.",
+          "Komplettes oder selektives Entpacken plus SHA-256 Prüfung.",
+          "Unterstützt .zip, .7z, .tar.zst (Zstandard), .tar.gz, .tar, .tar.bz2, .tar.xz."
+        ]
+      }
+    };
+
+    function detectOS() {
+      const ua = navigator.userAgent.toLowerCase();
+      if (/iphone|ipad|ipod|android/.test(ua)) return { id: "mobile", label: "Tablet / Mobile" };
+      if (ua.includes("win")) return { id: "win", label: "Windows" };
+      if (ua.includes("mac")) return { id: "mac", label: "macOS" };
+      if (ua.includes("linux")) return { id: "linux", label: "Linux" };
+      return { id: "win", label: "Windows" };
+    }
+
+    const os = detectOS();
+    const osCard = document.getElementById(`card-${os.id}`);
+    const osBtn = document.getElementById(`btn-${os.id}`);
+    if (osCard) osCard.classList.add("recommended");
+    const primaryBtn = document.getElementById("primary-btn");
+    if (osBtn) primaryBtn.href = osBtn.href;
+
+    function applyLang(code) {
+      const t = I18N[code] || I18N.en;
+      document.documentElement.lang = code;
+      const kasuUrl = `https://www.kasuality.com/${code}/`;
+      document.querySelector(".brand").href = kasuUrl;
+      document.getElementById("footer-brand-link").href = kasuUrl;
+      document.getElementById("pill").textContent = t.pill;
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("subtitle").textContent = t.subtitle;
+      primaryBtn.textContent = t.dlFor(os.label);
+      document.getElementById("detected-note").textContent = t.detected(os.label);
+      document.getElementById("feat-heading").textContent = t.featHeading;
+      const ul = document.getElementById("feat-list");
+      ul.innerHTML = "";
+      t.features.forEach((line) => {
+        const li = document.createElement("li");
+        li.textContent = line;
+        ul.appendChild(li);
+      });
+      document.querySelectorAll(".lang-btn").forEach((b) => {
+        b.classList.toggle("active", b.dataset.lang === code);
+      });
+    }
+
+    document.querySelectorAll(".lang-btn").forEach((b) => {
+      b.addEventListener("click", () => applyLang(b.dataset.lang));
+    });
+
+    const navLang = (navigator.language || "en").slice(0, 2).toLowerCase();
+    applyLang(I18N[navLang] ? navLang : "en");
+  </script>
+</body>
+</html>

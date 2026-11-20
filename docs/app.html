@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kasuality Archiver Web — by Kasuality</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#1D4ED8">
+  <style>
+    :root {
+      --bg: #0A0E17;
+      --panel: #111827;
+      --card: #1E293B;
+      --border: #475569;
+      --text: #F8FAFC;
+      --muted: #CBD5E1;
+      --link: #93C5FD;
+      --accent: #1D4ED8;
+      --accent-hover: #1E40AF;
+      --safe-bg: #064E3B;
+      --safe-fg: #A7F3D0;
+      --warn-bg: #451A03;
+      --warn-fg: #FDE68A;
+      --danger-bg: #450A0A;
+      --danger-fg: #FECACA;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 14px; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; flex-wrap: wrap; background: var(--panel);
+      border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+    .brand img { width: 32px; height: 32px; }
+    .brand strong { font-size: 1.05rem; }
+    .brand span { color: var(--link); font-size: 0.85rem; font-weight: 600; margin-left: 6px; }
+    .hdr-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .badge {
+      padding: 5px 10px; border-radius: 8px; font-size: 0.82rem; font-weight: 700;
+      background: var(--card); color: var(--muted); border: 1px solid var(--border);
+    }
+    .badge.safe { background: var(--safe-bg); color: var(--safe-fg); border-color: #34D399; }
+    .badge.warn { background: var(--warn-bg); color: var(--warn-fg); border-color: #F59E0B; }
+    .badge.danger { background: var(--danger-bg); color: var(--danger-fg); border-color: #EF4444; }
+    select, button, input[type="text"] {
+      font-family: inherit; font-size: 0.9rem; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--card); color: var(--text);
+      padding: 8px 12px;
+    }
+    button { cursor: pointer; font-weight: 600; }
+    button.primary { background: var(--accent); border-color: var(--link); color: #FFFFFF; }
+    button.primary:hover { background: var(--accent-hover); }
+    .toolbar {
+      display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0;
+      align-items: center;
+    }
+    .search-row {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;
+    }
+    .search-row input[type="text"] { flex: 1 1 220px; min-width: 160px; }
+    .split {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    @media (max-width: 780px) {
+      .split { grid-template-columns: 1fr; }
+    }
+    .pane {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+      min-height: 360px;
+    }
+    .pane-hdr {
+      background: var(--card); padding: 9px 12px; font-weight: 700; font-size: 0.9rem;
+      border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;
+    }
+    .list { overflow: auto; flex: 1; max-height: 460px; }
+    .row {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 9px 12px; border-bottom: 1px solid #1F2937; cursor: pointer;
+    }
+    .row:hover, .row.active { background: #1E3A8A; color: #FFFFFF; }
+    .row-name { word-break: break-all; font-size: 0.9rem; }
+    .row-meta { color: var(--muted); font-size: 0.8rem; white-space: nowrap; }
+    .row.active .row-meta { color: #E2E8F0; }
+    .preview-body {
+      padding: 12px; overflow: auto; flex: 1; max-height: 460px;
+      font-family: Consolas, ui-monospace, monospace; font-size: 0.85rem;
+      white-space: pre-wrap; word-break: break-word;
+    }
+    .preview-body img { max-width: 100%; height: auto; border-radius: 8px; }
+    footer {
+      margin-top: 14px; display: flex; justify-content: space-between; flex-wrap: wrap;
+      gap: 8px; color: var(--muted); font-size: 0.82rem; padding: 4px 2px;
+    }
+    footer a { color: var(--link); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="https://kasuality.com" target="_blank" rel="noopener">
+        <img src="logo.svg" alt="Kasuality Archiver Logo">
+        <div>
+          <strong>Kasuality Archiver Web</strong>
+          <span>by Kasuality</span>
+        </div>
+      </a>
+      <div class="hdr-right">
+        <span id="sec-badge" class="badge">No archive open</span>
+        <select id="lang-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="it">IT</option>
+          <option value="fr">FR</option>
+          <option value="es">ES</option>
+          <option value="de">DE</option>
+        </select>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <input type="file" id="open-input" accept=".zip" hidden>
+      <input type="file" id="create-input" multiple hidden>
+      <button class="primary" id="btn-open">Open .zip</button>
+      <button id="btn-create">Create .zip</button>
+      <button id="btn-dl-selected">Extract Selected</button>
+      <button id="btn-sha">SHA-256</button>
+      <a href="index.html" style="color:var(--link);font-size:0.88rem;margin-left:auto;">Desktop Downloads</a>
+    </div>
+
+    <div class="search-row">
+      <input type="text" id="search-input" placeholder="Search filename or full-text inside .zip...">
+      <select id="search-mode">
+        <option value="name">Filename</option>
+        <option value="text">Full-Text</option>
+      </select>
+      <button id="btn-search">Search</button>
+    </div>
+
+    <div class="split">
+      <div class="pane">
+        <div class="pane-hdr">
+          <span id="hdr-files">Archive Entries</span>
+          <span id="count-label" class="row-meta">0 items</span>
+        </div>
+        <div class="list" id="entry-list"></div>
+      </div>
+
+      <div class="pane">
+        <div class="pane-hdr">
+          <span id="hdr-preview">Quick Look (In-Browser, Zero Upload)</span>
+        </div>
+        <div class="preview-body" id="preview-body"></div>
+      </div>
+    </div>
+
+    <footer>
+      <span id="status-text">100% local in your browser. Files never leave your device.</span>
+      <span>100% Free • Zero Ads • <a id="footer-brand-link" href="https://www.kasuality.com/en/" target="_blank" rel="noopener">by Kasuality</a></span>
+    </footer>
+  </div>
+
+  <script>
+    const I18N = {
+      en: {
+        noArchive: "No archive open",
+        btnOpen: "Open .zip",
+        btnCreate: "Create .zip",
+        btnExtract: "Extract Selected",
+        hdrFiles: "Archive Entries",
+        hdrPreview: "Quick Look (In-Browser, Zero Upload)",
+        welcome: "Open a .zip file from your phone, tablet, or computer.\n\n- Everything runs 100% locally in your browser (zero server upload).\n- Automatic Zero-Trust scan for path traversal and .exe/.pdf.exe traps.\n- Instant Quick Look for text, code, and images.\n- Full-Text search inside compressed files.\n- Create new .zip archives right from your device.",
+        safe: (n) => `SAFE (${n} verified)`,
+        warn: (n) => `WARNING (${n} alerts)`,
+        danger: (n) => `DANGER (${n} threats)`,
+        statusLocal: "100% local in your browser. Files never leave your device."
+      },
+      it: {
+        noArchive: "Nessun archivio aperto",
+        btnOpen: "Apri .zip",
+        btnCreate: "Crea .zip",
+        btnExtract: "Estrai Selezionato",
+        hdrFiles: "Contenuto Archivio",
+        hdrPreview: "Quick Look (Nel Browser, Zero Upload)",
+        welcome: "Apri un file .zip dal tuo telefono, tablet o computer.\n\n- Tutto gira al 100% in locale nel browser (nessun invio a server).\n- Scansione automatica Zero-Trust contro path traversal e trappole .pdf.exe.\n- Quick Look istantaneo per testi, codice e immagini.\n- Ricerca Full-Text dentro i file compressi.\n- Crea nuovi file .zip direttamente dal tuo dispositivo.",
+        safe: (n) => `SICURO (${n} verificati)`,
+        warn: (n) => `ATTENZIONE (${n} avvisi)`,
+        danger: (n) => `PERICOLO (${n} minacce)`,
+        statusLocal: "100% locale nel tuo browser. I file non lasciano mai il dispositivo."
+      },
+      fr: {
+        noArchive: "Aucune archive ouverte",
+        btnOpen: "Ouvrir .zip",
+        btnCreate: "Créer .zip",
+        btnExtract: "Extraire Sélection",
+        hdrFiles: "Contenu de l'archive",
+        hdrPreview: "Quick Look (Local, Zéro Upload)",
+        welcome: "Ouvrez un fichier .zip depuis votre téléphone, tablette ou PC.\n\n- 100% local dans votre navigateur.\n- Analyse Zero-Trust automatique.\n- Aperçu Quick Look sans extraction.",
+        safe: (n) => `SÛR (${n} vérifiés)`,
+        warn: (n) => `ATTENTION (${n} alertes)`,
+        danger: (n) => `DANGER (${n} menaces)`,
+        statusLocal: "100% local dans votre navigateur."
+      },
+      es: {
+        noArchive: "Ningún archivo abierto",
+        btnOpen: "Abrir .zip",
+        btnCreate: "Crear .zip",
+        btnExtract: "Extraer Selección",
+        hdrFiles: "Contenido del archivo",
+        hdrPreview: "Quick Look (En el navegador, Sin subida)",
+        welcome: "Abre un archivo .zip desde tu móvil, tablet o PC.\n\n- 100% local en tu navegador.\n- Escaneo Zero-Trust automático.\n- Vista previa Quick Look sin extraer.",
+        safe: (n) => `SEGURO (${n} verificados)`,
+        warn: (n) => `ADVERTENCIA (${n} avisos)`,
+        danger: (n) => `PELIGRO (${n} amenazas)`,
+        statusLocal: "100% local en tu navegador."
+      },
+      de: {
+        noArchive: "Kein Archiv geöffnet",
+        btnOpen: ".zip öffnen",
+        btnCreate: ".zip erstellen",
+        btnExtract: "Auswahl entpacken",
+        hdrFiles: "Archivinhalt",
+        hdrPreview: "Quick Look (Lokal im Browser)",
+        welcome: "Öffne eine .zip-Datei auf Smartphone, Tablet oder PC.\n\n- 100% lokal im Browser.\n- Automatischer Zero-Trust Scan.\n- Sofortige Quick Look Vorschau.",
+        safe: (n) => `SICHER (${n} geprüft)`,
+        warn: (n) => `WARNUNG (${n} Hinweise)`,
+        danger: (n) => `GEFAHR (${n} Bedrohungen)`,
+        statusLocal: "100% lokal in deinem Browser."
+      }
+    };
+
+    const DANGEROUS_EXTS = [".exe",".bat",".cmd",".ps1",".vbs",".js",".hta",".scr",".msi",".dll",".reg",".lnk"];
+    const TEXT_EXTS = [".txt",".md",".py",".js",".ts",".json",".css",".html",".xml",".svg",".csv",".log",".yml",".yaml",".ini"];
+    const IMG_EXTS = [".png",".jpg",".jpeg",".gif",".webp",".bmp"];
+    const SMART_EXCLUDES = ["node_modules", ".git", "__pycache__", ".venv", "dist", ".DS_Store", "Thumbs.db"];
+
+    let lang = I18N[(navigator.language || "en").slice(0, 2).toLowerCase()] ? (navigator.language || "en").slice(0, 2).toLowerCase() : "en";
+    let currentBytes = null;
+    let currentName = "";
+    let entries = [];
+    let selectedEntry = null;
+
+    // CRC32 table for ZIP creation
+    const CRC_TABLE = new Uint32Array(256);
+    for (let i = 0; i < 256; i++) {
+      let c = i;
+      for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      CRC_TABLE[i] = c >>> 0;
+    }
+    function crc32(bytes) {
+      let crc = 0xFFFFFFFF;
+      for (let i = 0; i < bytes.length; i++) crc = CRC_TABLE[(crc ^ bytes[i]) & 0xFF] ^ (crc >>> 8);
+      return (crc ^ 0xFFFFFFFF) >>> 0;
+    }
+
+    async function inflateRaw(u8) {
+      const ds = new DecompressionStream("deflate-raw");
+      const writer = ds.writable.getWriter();
+      writer.write(u8);
+      writer.close();
+      return new Uint8Array(await new Response(ds.readable).arrayBuffer());
+    }
+
+    async function deflateRaw(u8) {
+      const cs = new CompressionStream("deflate-raw");
+      const writer = cs.writable.getWriter();
+      writer.write(u8);
+      writer.close();
+      return new Uint8Array(await new Response(cs.readable).arrayBuffer());
+    }
+
+    function parseZip(buffer) {
+      const view = new DataView(buffer);
+      const u8 = new Uint8Array(buffer);
+      let eocd = -1;
+      for (let i = u8.length - 22; i >= Math.max(0, u8.length - 65557); i--) {
+        if (view.getUint32(i, true) === 0x06054B50) { eocd = i; break; }
+      }
+      if (eocd < 0) throw new Error("Invalid ZIP file (EOCD not found).");
+      const total = view.getUint16(eocd + 10, true);
+      let ptr = view.getUint32(eocd + 16, true);
+      const dec = new TextDecoder("utf-8");
+      const list = [];
+
+      for (let idx = 0; idx < total; idx++) {
+        if (view.getUint32(ptr, true) !== 0x02014B50) break;
+        const method = view.getUint16(ptr + 10, true);
+        const compSize = view.getUint32(ptr + 20, true);
+        const uncompSize = view.getUint32(ptr + 24, true);
+        const nameLen = view.getUint16(ptr + 28, true);
+        const extraLen = view.getUint16(ptr + 30, true);
+        const commLen = view.getUint16(ptr + 32, true);
+        const localOff = view.getUint32(ptr + 42, true);
+        const name = dec.decode(u8.subarray(ptr + 46, ptr + 46 + nameLen));
+        ptr += 46 + nameLen + extraLen + commLen;
+
+        const lNameLen = view.getUint16(localOff + 26, true);
+        const lExtraLen = view.getUint16(localOff + 28, true);
+        const dataStart = localOff + 30 + lNameLen + lExtraLen;
+        const compressed = u8.subarray(dataStart, dataStart + compSize);
+        list.push({
+          name,
+          method,
+          compSize,
+          size: uncompSize,
+          isDir: name.endsWith("/"),
+          compressed
+        });
+      }
+      return list;
+    }
+
+    async function readEntryBytes(entry) {
+      if (entry.method === 0) return entry.compressed;
+      if (entry.method === 8) return await inflateRaw(entry.compressed);
+      throw new Error(`Unsupported compression method: ${entry.method}`);
+    }
+
+    async function buildZip(files) {
+      const enc = new TextEncoder();
+      const localParts = [];
+      const centralParts = [];
+      let offset = 0;
+
+      for (const file of files) {
+        const rawName = file.webkitRelativePath || file.name;
+        if (SMART_EXCLUDES.some((ex) => rawName.split("/").includes(ex))) continue;
+        const nameBytes = enc.encode(rawName);
+        const rawData = new Uint8Array(await file.arrayBuffer());
+        const compData = await deflateRaw(rawData);
+        const useDeflate = compData.length < rawData.length;
+        const payload = useDeflate ? compData : rawData;
+        const method = useDeflate ? 8 : 0;
+        const crc = crc32(rawData);
+
+        const lh = new Uint8Array(30 + nameBytes.length);
+        const lv = new DataView(lh.buffer);
+        lv.setUint32(0, 0x04034B50, true);
+        lv.setUint16(4, 20, true);
+        lv.setUint16(6, 0x0800, true);
+        lv.setUint16(8, method, true);
+        lv.setUint32(14, crc, true);
+        lv.setUint32(18, payload.length, true);
+        lv.setUint32(22, rawData.length, true);
+        lv.setUint16(26, nameBytes.length, true);
+        lh.set(nameBytes, 30);
+
+        localParts.push(lh, payload);
+
+        const ch = new Uint8Array(46 + nameBytes.length);
+        const cv = new DataView(ch.buffer);
+        cv.setUint32(0, 0x02014B50, true);
+        cv.setUint16(4, 20, true);
+        cv.setUint16(6, 20, true);
+        cv.setUint16(8, 0x0800, true);
+        cv.setUint16(10, method, true);
+        cv.setUint32(16, crc, true);
+        cv.setUint32(20, payload.length, true);
+        cv.setUint32(24, rawData.length, true);
+        cv.setUint16(28, nameBytes.length, true);
+        cv.setUint32(42, offset, true);
+        ch.set(nameBytes, 46);
+        centralParts.push(ch);
+
+        offset += lh.length + payload.length;
+      }
+
+      const centralSize = centralParts.reduce((s, p) => s + p.length, 0);
+      const eocd = new Uint8Array(22);
+      const ev = new DataView(eocd.buffer);
+      ev.setUint32(0, 0x06054B50, true);
+      ev.setUint16(8, centralParts.length, true);
+      ev.setUint16(10, centralParts.length, true);
+      ev.setUint32(12, centralSize, true);
+      ev.setUint32(16, offset, true);
+
+      return new Blob([...localParts, ...centralParts, eocd], { type: "application/zip" });
+    }
+
+    function scanEntries(list) {
+      let status = "safe";
+      for (const e of list) {
+        const norm = e.name.replace(/\\/g, "/");
+        if (norm.startsWith("/") || norm.split("/").includes("..")) return "danger";
+        const base = norm.split("/").pop().toLowerCase();
+        const parts = base.split(".");
+        if (parts.length >= 3 && DANGEROUS_EXTS.includes("." + parts[parts.length - 1])) return "danger";
+        if (DANGEROUS_EXTS.some((ext) => base.endsWith(ext))) status = "warn";
+      }
+      return status;
+    }
+
+    function renderEntries(list) {
+      const container = document.getElementById("entry-list");
+      container.innerHTML = "";
+      document.getElementById("count-label").textContent = `${list.length} items`;
+      for (const e of list) {
+        const div = document.createElement("div");
+        div.className = "row";
+        if (selectedEntry === e) div.classList.add("active");
+        const n = document.createElement("span");
+        n.className = "row-name";
+        n.textContent = e.name;
+        const m = document.createElement("span");
+        m.className = "row-meta";
+        m.textContent = e.isDir ? "DIR" : `${(e.size / 1024).toFixed(1)} KB`;
+        div.append(n, m);
+        div.onclick = () => selectEntry(e, div);
+        container.appendChild(div);
+      }
+    }
+
+    async function selectEntry(entry, rowEl) {
+      selectedEntry = entry;
+      document.querySelectorAll(".row").forEach((r) => r.classList.remove("active"));
+      if (rowEl) rowEl.classList.add("active");
+      const preview = document.getElementById("preview-body");
+      if (entry.isDir) { preview.textContent = entry.name; return; }
+      try {
+        const bytes = await readEntryBytes(entry);
+        const lower = entry.name.toLowerCase();
+        if (IMG_EXTS.some((ext) => lower.endsWith(ext))) {
+          const url = URL.createObjectURL(new Blob([bytes]));
+          preview.innerHTML = "";
+          const img = document.createElement("img");
+          img.src = url;
+          preview.appendChild(img);
+          return;
+        }
+        if (TEXT_EXTS.some((ext) => lower.endsWith(ext)) || bytes.length < 131072) {
+          preview.textContent = new TextDecoder("utf-8", { fatal: false }).decode(bytes.subarray(0, 500000));
+        } else {
+          preview.textContent = `Binary file (${bytes.length} bytes). Use 'Extract Selected' to download.`;
+        }
+      } catch (err) {
+        preview.textContent = `Preview error: ${err.message}`;
+      }
+    }
+
+    function applyLang(code) {
+      lang = I18N[code] ? code : "en";
+      const t = I18N[lang];
+      const kasuUrl = `https://www.kasuality.com/${lang}/`;
+      document.querySelector(".brand").href = kasuUrl;
+      document.getElementById("footer-brand-link").href = kasuUrl;
+      document.getElementById("lang-select").value = lang;
+      document.getElementById("btn-open").textContent = t.btnOpen;
+      document.getElementById("btn-create").textContent = t.btnCreate;
+      document.getElementById("btn-dl-selected").textContent = t.btnExtract;
+      document.getElementById("hdr-files").textContent = t.hdrFiles;
+      document.getElementById("hdr-preview").textContent = t.hdrPreview;
+      document.getElementById("status-text").textContent = t.statusLocal;
+      if (!entries.length) {
+        document.getElementById("sec-badge").textContent = t.noArchive;
+        document.getElementById("preview-body").textContent = t.welcome;
+      }
+    }
+
+    document.getElementById("lang-select").onchange = (e) => applyLang(e.target.value);
+    document.getElementById("btn-open").onclick = () => document.getElementById("open-input").click();
+    document.getElementById("btn-create").onclick = () => document.getElementById("create-input").click();
+
+    document.getElementById("open-input").onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      currentName = file.name;
+      currentBytes = await file.arrayBuffer();
+      entries = parseZip(currentBytes);
+      selectedEntry = null;
+      renderEntries(entries);
+      const st = scanEntries(entries);
+      const badge = document.getElementById("sec-badge");
+      badge.className = `badge ${st}`;
+      badge.textContent = I18N[lang][st](entries.length);
+      document.getElementById("status-text").textContent = `${file.name} (${entries.length} entries)`;
+    };
+
+    document.getElementById("create-input").onchange = async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      const blob = await buildZip(files);
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "kasuality_archive.zip";
+      a.click();
+      currentName = "kasuality_archive.zip";
+      currentBytes = await blob.arrayBuffer();
+      entries = parseZip(currentBytes);
+      renderEntries(entries);
+    };
+
+    document.getElementById("btn-dl-selected").onclick = async () => {
+      if (!selectedEntry || selectedEntry.isDir) return;
+      const bytes = await readEntryBytes(selectedEntry);
+      const safeName = selectedEntry.name.split("/").pop() || "file";
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([bytes]));
+      a.download = safeName;
+      a.click();
+    };
+
+    document.getElementById("btn-sha").onclick = async () => {
+      if (!currentBytes) return;
+      const digest = await crypto.subtle.digest("SHA-256", currentBytes);
+      const hex = Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, "0")).join("");
+      document.getElementById("preview-body").textContent = `File: ${currentName}\nSHA-256:\n${hex}`;
+    };
+
+    document.getElementById("btn-search").onclick = async () => {
+      const q = document.getElementById("search-input").value.trim().toLowerCase();
+      if (!q) { renderEntries(entries); return; }
+      const mode = document.getElementById("search-mode").value;
+      if (mode === "name") {
+        renderEntries(entries.filter((e) => e.name.toLowerCase().includes(q)));
+      } else {
+        const matched = [];
+        const lines = [];
+        for (const e of entries) {
+          if (e.isDir || e.size > 1048576) continue;
+          try {
+            const txt = new TextDecoder().decode(await readEntryBytes(e));
+            const found = txt.split(/\r?\n/).filter((l) => l.toLowerCase().includes(q));
+            if (found.length) {
+              matched.push(e);
+              lines.push(`${e.name}: ${found[0].trim().slice(0, 140)}`);
+            }
+          } catch {}
+        }
+        renderEntries(matched);
+        document.getElementById("preview-body").textContent = lines.join("\n") || "No matches found.";
+      }
+    };
+
+    applyLang(lang);
+  </script>
+</body>
+</html>

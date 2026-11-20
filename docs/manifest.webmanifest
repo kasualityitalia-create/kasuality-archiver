@@ -1,0 +1,15 @@
+{
+  "name": "Kasuality Archiver Web",
+  "short_name": "K-Archiver",
+  "start_url": "./app.html",
+  "display": "standalone",
+  "background_color": "#0A0E17",
+  "theme_color": "#1D4ED8",
+  "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
