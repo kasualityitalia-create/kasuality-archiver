@@ -2,24 +2,37 @@
 
 # Kasuality Archiver — by Kasuality
 
-Archiver desktop gratuito, veloce e senza pubblicità per Windows, pensato per sostituire WinZip e WinRAR nelle attività quotidiane di sviluppatori, designer e agenzie.
+[Download Page (Auto-Detect OS)](https://kasualityitalia-create.github.io/kasuality-archiver/) | [Open Mobile Web App (Android / iOS / iPadOS)](https://kasualityitalia-create.github.io/kasuality-archiver/app.html) | [Latest Desktop Releases (v1.0.1)](https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest) | [Leggi in Italiano](README.it.md)
 
-## Cosa offre in più rispetto a WinZip / WinRAR
-- **100% Free, Zero Ads, Zero Nag Screen** (`by Kasuality` — [kasuality.com](https://kasuality.com))
-- **Quick Look istantaneo**: anteprima di file di testo, codice e immagini direttamente in memoria senza estrarre su disco
-- **Scansione Sicurezza Zero-Trust**: rileva path traversal, doppie estensioni sospette (es. `.pdf.exe`) e zip bomb prima di estrarre
-- **Ricerca Full-Text negli archivi**: cerca parole o righe di codice dentro i file compressi senza scompattarli
-- **Formati moderni**: crea ed estrae `.zip`, `.7z`, `.tar.zst` (Zstandard multi-thread) e `.tar.gz`, e legge `.tar`, `.tar.bz2`, `.tar.xz`, `.zst`
-- **Smart Dev Exclude**: salta automaticamente `node_modules`, `.git`, `__pycache__`, `dist`, `.venv` durante la creazione
-- **SHA-256 immediato**: calcola e copia l'hash di integrità per consegne sicure ai clienti
+**Kasuality Archiver** is a 100% free, zero-ads, zero-nag-screen archive manager built by [Kasuality](https://www.kasuality.com/en/) for developers, designers, agencies, and everyday users.
 
-## Avvio rapido
-Doppio clic su `launch.bat` oppure da terminale:
-```powershell
+## Key Advantages Over Legacy Archivers
+- **100% Free, Zero Ads, Zero Nag Screens**: No trial popups, no upsells, no bundled adware.
+- **Quick Look Without Extracting**: Preview text, code, JSON, Markdown, and images directly in memory without leaving temporary files on disk.
+- **Zero-Trust Security Scan**: Automatically detects path traversal (`../../`), suspicious double extensions (such as `invoice.pdf.exe`), and zip-bomb anomalies before extraction.
+- **Full-Text Search Inside Archives**: Search keywords or lines of code inside compressed files without unpacking.
+- **Extract All or Selected Only**: Extract the entire archive or select specific files (`Ctrl + Click` or right-click -> *Extract selected only*).
+- **Modern Formats + Smart Dev Exclude**: Supports `.zip`, `.7z`, `.tar.zst` (Zstandard), `.tar.gz`, `.tar`, `.tar.bz2`, `.tar.xz`, and `.zst`. Automatically skips `node_modules`, `.git`, `__pycache__`, `dist`, and `.venv`.
+- **SHA-256 Verification + Built-In `(i)` User Guide**: Instant integrity hash copy and 5-language UI (`EN`, `IT`, `FR`, `ES`, `DE`).
+
+## Mobile, Tablet, and Browser Use (No Installation)
+Use **Kasuality Archiver Web** directly in your browser on **Android, iPhone, iPad, or Desktop** with zero server uploads (100% local processing via `CompressionStream` / `DecompressionStream`):
+- Open: [https://kasualityitalia-create.github.io/kasuality-archiver/app.html](https://kasualityitalia-create.github.io/kasuality-archiver/app.html)
+- Supports opening and creating `.zip` files, Quick Look, Full-Text search, Zero-Trust scan, selective download, and SHA-256.
+
+## Desktop Installation (Windows, macOS, Linux)
+Download the prebuilt package from [Releases](https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest) or run from source:
+
+```bash
+pip install -r requirements.txt
 python app.py
 ```
 
-## Test automatici
-```powershell
+## Run Unit Tests
+
+```bash
 python -m unittest discover -s tests -v
 ```
+
+## License
+Released under the [MIT License](LICENSE) — Copyright (c) 2026 [Kasuality](https://www.kasuality.com/en/).
