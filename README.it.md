@@ -2,7 +2,9 @@
 
 # Kasuality Archiver — by Kasuality
 
-[Pagina Download (Rilevamento OS)](https://kasualityitalia-create.github.io/kasuality-archiver/) | [Apri Web App Mobile (Android / iOS / iPadOS)](https://kasualityitalia-create.github.io/kasuality-archiver/app.html) | [Ultime Release Desktop (v1.0.1)](https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest) | [Read in English](README.md)
+[Pagina Download (Rilevamento OS)](https://kasualityitalia-create.github.io/kasuality-archiver/) | [Apri Web App Mobile (Android / iOS / iPadOS)](https://kasualityitalia-create.github.io/kasuality-archiver/app.html) | [Ultime Release Desktop (v1.0.1)](https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest)
+
+**Lingue:** [English](README.md) | Italiano | [Français](README.fr.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
 **Kasuality Archiver** è un gestore di archivi 100% gratuito, senza pubblicità e senza popup di licenza, realizzato da [Kasuality](https://www.kasuality.com/it/).
 
