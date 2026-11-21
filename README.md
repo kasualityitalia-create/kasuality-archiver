@@ -2,7 +2,9 @@
 
 # Kasuality Archiver — by Kasuality
 
-[Download Page (Auto-Detect OS)](https://kasualityitalia-create.github.io/kasuality-archiver/) | [Open Mobile Web App (Android / iOS / iPadOS)](https://kasualityitalia-create.github.io/kasuality-archiver/app.html) | [Latest Desktop Releases (v1.0.1)](https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest) | [Leggi in Italiano](README.it.md)
+[Download Page (Auto-Detect OS)](https://kasualityitalia-create.github.io/kasuality-archiver/) | [Open Mobile Web App (Android / iOS / iPadOS)](https://kasualityitalia-create.github.io/kasuality-archiver/app.html) | [Latest Desktop Releases (v1.0.1)](https://github.com/kasualityitalia-create/kasuality-archiver/releases/latest)
+
+**Languages:** English | [Italiano](README.it.md) | [Français](README.fr.md) | [Español](README.es.md) | [Deutsch](README.de.md)
 
 **Kasuality Archiver** is a 100% free, zero-ads, zero-nag-screen archive manager built by [Kasuality](https://www.kasuality.com/en/) for developers, designers, agencies, and everyday users.
 
@@ -25,14 +27,3 @@ Download the prebuilt package from [Releases](https://github.com/kasualityitalia
 
 ```bash
 pip install -r requirements.txt
-python app.py
-```
-
-## Run Unit Tests
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-## License
-Released under the [MIT License](LICENSE) — Copyright (c) 2026 [Kasuality](https://www.kasuality.com/en/).
